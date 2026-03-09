@@ -1,7 +1,7 @@
-Overview
+Overview:
 
 
-Team Member Roles
+Team Member Roles:
 Alexander Jeong, ajeong4 - Role: Data Analyst
 Responsibilities: Exploratory data analysis and modeling. Develop logic for EtD ratio, run regression models to determine feature importance.
 
@@ -9,13 +9,13 @@ Rick Hu:, rickhu2 - Role: Data Analyst:
 Responsibilities: Query the nba_api, scrape financial tables from Spotrac and the GitHub repo. Data cleaning and data integrity.
 
 
-Question
+Question:
 
 
-Datasets Used
+Datasets Used:
 
 
-Timeline
+Timeline:
 Database Acquisition - milestone 2 deadline
 Find databases relating to metrics of our question, such as annual salary data, contract information, and basketball statistics of NBA players - Rick
 Look over any licensing or terms of use the databases have, such as if they are public domain, open data, etc. - Alex
@@ -45,7 +45,7 @@ Complete the project report with findings of our analysis - Alex and Rick
 Verify end-to-end automated script to ensure that the code can be re-run with different data from a new season - Alex and Rick
 
 
-Constraints
+Constraints:
 Data Completeness: The issue is primarily with injuries and “Load Management,” which can skew ROI. A highly-paid player who is injured provides 0 ROI, but this doesn’t necessarily mean the contract was a bad decision at the time of signing. Maybe we can use “Per-Game” salary metrics instead to avoid skewing the model.
 
 Temporal Coverage: Salary data is public, but there are other bonuses (e.g., a bonus for making an All-Star team, All-NBA, etc.) that are usually not included in these public datasets
@@ -55,4 +55,4 @@ Technical Challenges: The nba_api could block IP addresses if too many requests 
 Data quality and integration: some players could have naming inconsistencies which make integrating the data a challenge. For example, players like “P.J. Tucker” v “PJ Tucker”. This could be a potential cleaning challenge that could break our data integration.
 
 
-Gaps
+Gaps:
