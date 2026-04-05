@@ -39,24 +39,28 @@
   - Look over datasets for any data quality issues or errors - Alex and Rick
     - This includes scanning for any null values, formatting differences, inconsistencies, or duplications
 -   Clean the datasets through python by fixing any issues or errors that may still exist in the datasets - Rick
-Standardize all data columns - Alex
-Making numerical values like salary or games played INT without any other symbols such as $ or %
-Making string values like name or NBA team into all lowercase to avoid confusion and make data more consistent
-Data Integration - 4/13 to 4/20
-Create primary keys for dataset: player_name and season - Alex
-Create new column for EtD ratio using other column variables - Rick
-Analysis of Integrated Data - 4/20 to 4/30
-Organize the players into different archetypes previously mentioned - Rick
-Veteran stars, mid-level role players, rookies, and 3-and-D
-Run a regression analysis model to chart the players to find if some positions bring more value than others or if certain skills translate into a player being better overall player - Alex and Rick
-Looks at salary as the dependent variable
-Skills like free-throw percentage, ppg, assists, rebounds, spg, etc. 
-Documentation of Data - 4/20 to 4/30
-Build a data dictionary that defines columns, such as defining EtD and explaining the math and reasoning behind our choices - Alex
-Documenting the source URLs for datasets, API version numbers, and dates when data was accessed to account for any changes - Rick
-Finalize Project and Review - May 1st - May 5th (Final Project Submission)
-Complete the project report with findings of our analysis - Alex and Rick
-Verify end-to-end automated script to ensure that the code can be re-run with different data from a new season - Alex and Rick
+- Standardize all data columns - Alex
+- Making numerical values like salary or games played INT without any other symbols such as $ or %
+- Making string values like name or NBA team into all lowercase to avoid confusion and make data more consistent
+
+- Data Integration - 4/13 to 4/20
+- Create primary keys for dataset: player_name and season - Alex
+- Create new column for EtD ratio using other column variables - Rick
+
+- Analysis of Integrated Data - 4/20 to 4/30
+- Organize the players into different archetypes previously mentioned - Rick
+- Veteran stars, mid-level role players, rookies, and 3-and-D
+- Run a regression analysis model to chart the players to find if some positions bring more value than others or if certain skills translate into a player being better overall player - Alex and Rick
+- Looks at salary as the dependent variable
+- Skills like free-throw percentage, ppg, assists, rebounds, spg, etc. 
+
+-  Documentation of Data - 4/20 to 4/30
+- Build a data dictionary that defines columns, such as defining EtD and explaining the math and reasoning behind our choices - Alex
+- Documenting the source URLs for datasets, API version numbers, and dates when data was accessed to account for any changes - Rick
+
+- Finalize Project and Review - May 1st to May 5th (Final Project Submission)
+- - Complete the project report with findings of our analysis - Alex and Rick
+- - Verify end-to-end automated script to ensure that the code can be re-run with different data from a new season - Alex and Rick
 
 
 ## 3. Changes to Project Plan
