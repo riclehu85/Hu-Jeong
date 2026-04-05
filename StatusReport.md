@@ -55,3 +55,9 @@
 
 ## Team Member Contributions
 
+### Rick Hu
+- Collected contract data from Basketball Reference and structured it into a usable CSV format
+- Developed and implemented data cleaning steps
+- Implemented API data extraction from 'nba_api'
+- Designed data cleaning pipeline
+- Contributed to planning for data integration and modeling
