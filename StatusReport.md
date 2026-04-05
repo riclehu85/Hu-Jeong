@@ -35,10 +35,10 @@
   - 'data/processed/nba_player_stats_cleaned.csv'
 
 ## 2. Updated Timeline
-Data Cleaning and Alignment - 4/6 to 4/20
-Look over datasets for any data quality issues or errors - Alex and Rick
-This includes scanning for any null values, formatting differences, inconsistencies, or duplications
-Clean the datasets through python by fixing any issues or errors that may still exist in the datasets - Rick
+- Data Cleaning and Alignment - 4/6 to 4/20
+  - Look over datasets for any data quality issues or errors - Alex and Rick
+    - This includes scanning for any null values, formatting differences, inconsistencies, or duplications
+-   Clean the datasets through python by fixing any issues or errors that may still exist in the datasets - Rick
 Standardize all data columns - Alex
 Making numerical values like salary or games played INT without any other symbols such as $ or %
 Making string values like name or NBA team into all lowercase to avoid confusion and make data more consistent
