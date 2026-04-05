@@ -1,5 +1,3 @@
-pip install nba_api
-
 from nba_api.stats.endpoints import playercareerstats
 
 # Nikola Jokić
