@@ -55,8 +55,8 @@
     - Skills like free-throw percentage, ppg, assists, rebounds, spg, etc. 
 
 -  Documentation of Data - 4/20 to 4/30
-  - Build a data dictionary that defines columns, such as defining EtD and explaining the math and reasoning behind our choices - Alex
-  - Documenting the source URLs for datasets, API version numbers, and dates when data was accessed to account for any changes - Rick
+    - Build a data dictionary that defines columns, such as defining EtD and explaining the math and reasoning behind our choices - Alex
+    - Documenting the source URLs for datasets, API version numbers, and dates when data was accessed to account for any changes - Rick
 
 - Finalize Project and Review - May 1st to May 5th (Final Project Submission)
   - Complete the project report with findings of our analysis - Alex and Rick
