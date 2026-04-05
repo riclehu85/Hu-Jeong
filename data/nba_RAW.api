@@ -1,13 +1,21 @@
-from nba_api.stats.endpoints import playercareerstats
+from pathlib import Path
+import pandas as pd
+from nba_api.stats.endpoints import leaguedashplayerstats
 
-# Nikola Jokić
-career = playercareerstats.PlayerCareerStats(player_id='203999')
+# Make sure folder exists
+Path("data/raw").mkdir(parents=True, exist_ok=True)
 
-# pandas data frames (optional: pip install pandas)
-career.season_totals_regular_season.get_data_frame()
+# Pull NBA player stats
+player_stats = leaguedashplayerstats.LeagueDashPlayerStats(
+    season="2024-25",
+    season_type_all_star="Regular Season"
+)
 
-# json
-career.get_json()
+# Convert to pandas DataFrame
+df = player_stats.get_data_frames()[0]
 
-# dictionary
-career.get_dict()
+# Save as CSV
+df.to_csv("data/raw/nba_player_stats.csv", index=False)
+
+print("Saved NBA stats to CSV!")
+print(df.head())
