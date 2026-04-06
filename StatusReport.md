@@ -30,8 +30,8 @@
   - Renamed columns for consistency (e.g. 'PLAYER_NAME' -> 'player_name')
 
 - **Tasks Left to Complete:**
-  - Check player_name for inconsistencies such as whether they have full player's name or initials
-  - Update string values such as player_name to be all lowercase for consistency throughout both dataabases
+  - Check player_name for inconsistencies, such as whether they have the full player's name or initials
+  - Update string values, such as player_name, to be all lowercase for consistency throughout both databases
  
 - **Artifacts:**
   - 'scripts/data_cleaning.py'
@@ -84,6 +84,13 @@
 - **Issue:** No shared unique ID between the nba_player_stats_cleaned.csv and the nba_contracts_cleaned.csv.
 - **Solution:** Will standardize player names and use a composite key, most likely ('player_name', 'season') for merging. 
 
+### Challenge 3: Data Source Limitations
+- **Issue:** Original data source (Spotrac) did not allow for easy export of data, making it difficult to integrate into the project. 
+- **Solution:** We switched to Basketball Reference as our primary source for contract data, as it provided a more accessible format that could be converted into CSV and processed.
+
+### Challenge 4: Data Integration Complexity
+- **Issue:** Even after cleaning, differences in naming conventions (e.g., "P.J. Tucker" vs "PJ Tucker") may cause mismatches when merging the data. 
+- **Solution:** Not implemented yet, but we plan to implement additional preprocessing steps to improve the accuracy. 
 
 ## Team Member Contributions
 
