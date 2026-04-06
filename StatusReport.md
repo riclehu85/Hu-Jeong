@@ -93,3 +93,7 @@
 - Implemented API data extraction from 'nba_api'
 - Designed data cleaning pipeline
 - Contributed to planning for data integration and modeling
+
+### Alexander Jeong
+- Reorganized timeline and status on each task to better fit changes made since Milestone 2
+- Contributed to planning for data integration and modeling
