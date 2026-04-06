@@ -29,7 +29,7 @@
   - Filtered out players with fewer than 8 games played
   - Renamed columns for consistency (e.g. 'PLAYER_NAME' -> 'player_name')
 
-- **Tasks Left to Complete**
+- **Tasks Left to Complete:**
   - 
  
 - **Artifacts:**
