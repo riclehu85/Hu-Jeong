@@ -65,6 +65,7 @@
 
 ## 3. Changes to Project Plan
 
+- The feedback we recieved from our Milestone 2 plan showed us that we were heading in the right direction and that we did not need to change much of our plan. The one main criticism we recieved was regarding our github ProjectPlan.md which was not properly formatted, with sections lacking a consistent headers making the overall structure hard to follow. We changed our formatting in this StatusReport.md to make it easier to read and structured this document.
 - The original plan proposed using the site called Spotrac (https://www.spotrac.com/nba/contracts) as the primary source for contract data. However, we encountered limitations with exporting data. As a result, we switched to Basketball Reference (https://www.basketball-reference.com/contracts/players.html) as the primary source of contract data.
 - We narrowed the scope of the project to focus specifically on the **2025-2026 NBA season**. This change simplifies data alignment and ensures better consistency across datasets.
 - We are putting a larger emphasis on standardizing player names across datasets, as this is important for accurate data integration when there is no shared unique identifier. 
