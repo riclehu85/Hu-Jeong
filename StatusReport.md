@@ -96,4 +96,7 @@
 
 ### Alexander Jeong
 - Reorganized timeline and status on each task to better fit changes made since Milestone 2
+- Looked over databases for licensing terms and whether database came from offical sources or third-party
+- Checked over data for quality issues or errors for data cleaning
+- Helped implement data cleaning steps
 - Contributed to planning for data integration and modeling
