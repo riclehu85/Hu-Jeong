@@ -30,7 +30,8 @@
   - Renamed columns for consistency (e.g. 'PLAYER_NAME' -> 'player_name')
 
 - **Tasks Left to Complete:**
-  - 
+  - Check player_name for inconsistencies such as whether they have full player's name or initials
+  - Update string values such as player_name to be all lowercase for consistency throughout both dataabases
  
 - **Artifacts:**
   - 'scripts/data_cleaning.py'
