@@ -252,7 +252,7 @@ After running, the following files will be produced or refreshed:
 
 ### Running individual stages
 
-If you want to run a single stage in isolation, all scripts are in `scripts/` and can be invoked directly:
+If you want to run a single stage in order, all scripts are in `scripts/` and can be run directly in this order:
 
 ```bash
 python scripts/nba_API_RAW.py
@@ -263,7 +263,7 @@ python scripts/profile_data.py
 python scripts/make_visualizations.py
 ```
 
-Each script handles its own paths and can be re-run independently as long as upstream outputs exist.
+Each script handles its own paths and can be re-run independently.
 
 ### Troubleshooting
 
