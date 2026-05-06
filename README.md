@@ -1,6 +1,6 @@
 # Final Project Report: ROI of Current NBA Players ('23-'25)
 
-## Contributors: Alexander Jeong (ajeong4) & Rick Hu (rickhu2)
+#### Contributors: Alexander Jeong (ajeong4) & Rick Hu (rickhu2)
 
 ## Summary
 Our goal for this project was to do an analysis on the statistics of NBA players to try and find if there was a way to quantify Return on Investment (ROI) for NBA players. In the modern era of the NBA, the implementation of a rigorous salary cap, further complicated by the recent introduction of the "second apron" luxury tax tiers, has transformed roster construction from just having high value players to having to balance value and efficiency for financial optimization. 
