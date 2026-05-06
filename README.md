@@ -24,3 +24,20 @@ We are synthesizing traditional box score data with comprehensive financial spre
 - 3-and-D Specialists: Wing players prioritized for floor spacing and perimeter defense.
 
 To standardize our findings, we have developed a new variable/metric called the Efficiency-to-Dollar ratio. This ratio will be applied across four distinct player archetypes. We then employed a regression model to isolate specific skill sets—such as rim protection, three-point shooting, and secondary playmaking—against their impact on the EtD ratio. This allows us to identify "market inefficiencies," revealing which attributes are currently overvalued or undervalued in the free-agent market. 
+
+### Data Profile
+
+### Data Quality
+
+### Data Cleaning
+
+### Findings
+
+### Future Works
+
+### Challenges
+
+### Reproducing
+
+### References
+
