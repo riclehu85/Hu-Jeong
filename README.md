@@ -75,6 +75,17 @@ Role Players and Rookie Contributors produce roughly **10 times the PIE per doll
 Despite a 6-year average age difference (25 vs. 31), Prime Stars and Veteran Stars have nearly identical EtD ratios (0.381 vs. 0.346). This suggests the NBA's salary structure does not meaningfully discount aging stars relative to their younger counterparts within the high-salary tier. Once a player crosses the ~$20M threshold, market pricing appears largely insensitive to age. The salary distribution by archetype graph shows the two groups occupying overlapping salary ranges despite their different career stages. 
 <img width="2168" height="1167" alt="image" src="https://github.com/user-attachments/assets/ace14cce-59b4-4805-894f-e953f3dc8b5c" />
 
+### Sixth men are the surprising value bucket
+Sixth Men (defined as high-usage bench scorers averaging 12+ PPG in fewer than 28 minutes per game) average EtD of 1.35 — roughly 3.5x better than Prime Stars. This bucket includes players like Russell Westbrook (on a veteran minimum at $2.3M), Moritz Wagner ($5.0M, PIE 0.165), and Ty Jerome ($8.8M, PIE 0.134). These players deliver star-adjacent production at a fraction of the cost. Teams pursuing roster efficiency should look hard at this archetype. 
+
+### Salary correlates with PIE but with high variance
+Plotting salary against PIE (`outputs/figures/salary_vs_pie_scatter.png`) reveals a positive but loose relationship. The league's top producers (Nikola Jokić, Shai Gilgeous-Alexander, Giannis Antetokounmpo) cluster in the high-salary, high-PIE region as expected. However, several high-salary players produce well below their pay grade (Joel Embiid, Brandon Ingram, Paul George — all on injury-shortened seasons) while several minimum-contract players produce far above theirs. 
+<img width="2138" height="1368" alt="image" src="https://github.com/user-attachments/assets/e483cd87-6bb9-4056-88cd-a9b85796ce73" />
+
+### Top 20 cap-efficiency leaderboard
+The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contributors on minimum or near-minimum contracts. The leaderboard's ceiling — Jaden Springer at EtD 89, on a $70k 10-day contract — illustrates how raw EtD is dominated by contract-floor players. Within the high-salary tier (>$15M), Shai Gilgeous-Alexander stands out as the league's most efficient star at $38.3M with PIE 0.199 (EtD 0.519), substantially outperforming the Prime Star average of 0.381.
+<img width="2169" height="1768" alt="image" src="https://github.com/user-attachments/assets/20abf59f-93d5-445f-96b6-cc073e383913" />
+
 ### Future Works
 
 ### Challenges
