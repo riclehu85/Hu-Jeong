@@ -172,6 +172,15 @@ We initially hypothesized that rookie contracts would be the only source of high
 
 Going back once again to one of the major challenges we faced initially, integrating two datasets without a common ID (using name-matching instead) taught us the importance of data cleaning in data science. Managing issues such as diacritics (like the "ć" in Dončić) and suffixes showed us that carelessly using data without cleaning could lead to many unintended consequences, such as having multiple repeat players or simply having a couple players deleted from the clean database. 
 
+### Potential Future Works
+Multi-Season analysis
+Our analysis is limited to a single season (2024-2025 stats with their contracts). More seasons could make it a more powerful analysis. Tracking individual player ROI trajectories over time, identifying contract-year performance effects, and detecting changes in market efficiency across CBAs and rule changes. The code does support this, primarily ‘data_cleaning.py’.
+
+Better defensive metrics
+Defensive metrics are always harder to evaluate than offensive stats. Our defensive specialist archetype relies on more team-context DEF_RATING. A player on the league’s best defensive team appears as a defensive specialist regardless of their personal contribution. 
+
+Including playoff performance
+Our analysis uses regular season statistics only. Playoff performance is much more important for evaluating star contracts but introduces many issues since not every player makes the playoffs every year. However, we would incorporate playoff PIE as a separate feature for players who appeared in the postseason, weighted appropriately. 
 
 ## Challenges
 
