@@ -67,7 +67,16 @@ Our analysis of 387 NBA players across the 2024-25 regular season reveals a subs
 
 One of the clearest findings is the cost gap between top and bottom archetypes. Average EtD by archetype, sorted from best to worst value:
 
-| Archetype | n | Avg EtD | Median Salary | |---|---|---|---| | Role Player | 164 | 3.74 | $3.65M | | Rookie Contributor | 73 | 3.40 | $4.68M | | 3-and-D Wing | 21 | 1.98 | $10.04M | | High-Volume Scorer | 3 | 1.48 | $6.84M | | Defensive Specialist | 24 | 1.39 | $9.61M | | Sixth Man | 16 | 1.35 | $11.53M | | Prime Star | 40 | 0.38 | $36.91M | | Veteran Star | 46 | 0.35 | $34.97M | 
+| Archetype | n | Avg EtD | Median Salary | 
+|---|---|---|---| 
+| Role Player | 164 | 3.74 | $3.65M | 
+| Rookie Contributor | 73 | 3.40 | $4.68M | 
+| 3-and-D Wing | 21 | 1.98 | $10.04M | 
+| High-Volume Scorer | 3 | 1.48 | $6.84M | 
+| Defensive Specialist | 24 | 1.39 | $9.61M | 
+| Sixth Man | 16 | 1.35 | $11.53M | 
+| Prime Star | 40 | 0.38 | $36.91M | 
+| Veteran Star | 46 | 0.35 | $34.97M | 
 
 Role Players and Rookie Contributors produce roughly **10 times the PIE per dollar** of Prime Stars and Veteran Stars. While stars deliver substantially more raw production (avg PIE ~0.12 vs ~0.09), the salary gap is far larger than the production gap, creating a large efficiency penalty for star-tier contracts. This pattern is visible in: <img width="1968" height="1168" alt="image" src="https://github.com/user-attachments/assets/06df6185-3120-423f-88a0-9cf09d5828ac" />
 
