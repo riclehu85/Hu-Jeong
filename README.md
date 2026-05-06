@@ -58,6 +58,37 @@ The two datasets have no shared unique identifier. `nba_api` uses NBA's internal
 ## Data Quality
 
 ## Data Cleaning
+Loads base stats and advanced stats from the API and merges them on PLAYER_ID into a single stats dataframe
+- Eliminates any data fragmentation by using unique player id instead of names
+- Ensures that the player’s base and advances stats are unified under a single 
+
+Selects useful columns from both databases
+- Filters out any variables not used in this research while keeping useful columns in cleaned datasets
+- Isolates useful variables and data from ones irrelevant to our analysis and research questions
+
+Standardizes column names (snake_case)
+- Snake case is a formatting style where spaces in phrases are replaced with underscores (_) and all letters are lowercase
+- By standardizing all of our columns by implementing snake_case, it allows our analysis scripts to reference variables without errors caused by differences in spacing or capitalization
+
+Computes per-game versions of counting stats
+- It allows us to compare the efficiency of a player who played 82 games directly against one who played 50, valuing their per-minute impact rather than just their total seasonal accumulation
+
+Strips whitespace from player names
+- Stripping the whitespace helps to prevent failed record linkage by helping to match names in the integration process
+- It then becomes easier in our future operations to integrate the two datasets together to make nba_merged.csv using player names as a primary key. 
+
+Converts salary strings ('$1,234,567') to numeric values
+- By converting the salary and guaranteed columns from data type(str) to data type(int), we make it easier to make calculations regarding our EtD ratio.
+
+Drops rows missing critical fields
+- Filtering out null spaces allows for our analysis to be implemented without any errors and prevents any statistical outliers in our data
+
+Filters out players with fewer than MIN_GAMES_PLAYED games (8 games or less)
+- By dropping players with 8 games played or less, we remove a source of data which could prove to be a statistical outlier and ensure our data is reliable 
+
+Deduplicates contracts (Basketball Reference lists one row per future contract year per player)
+- Removing redundant rows from the data given by Basketball Reference, since their original data has a column for each year for a given player’s contract, while we are only focusing on the current 2025-2026 season for each individual player’s salary
+
 
 ## Findings
 
