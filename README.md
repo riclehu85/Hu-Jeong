@@ -61,6 +61,20 @@ The two datasets have no shared unique identifier. `nba_api` uses NBA's internal
 
 ### Findings
 
+Our analysis of 387 NBA players across the 2024-25 regular season reveals a substantial premium that the league pays for star-tier production, alongside several pockets of meaningful market inefficiency. We summarize findings using the Efficiency-to-Dollar (EtD) metric, computed as PIE × 100 divided by salary in millions. 
+
+### The “star tax” is large and consistent
+
+One of the clearest findings is the cost gap between top and bottom archetypes. Average EtD by archetype, sorted from best to worst value:
+
+| Archetype | n | Avg EtD | Median Salary | |---|---|---|---| | Role Player | 164 | 3.74 | $3.65M | | Rookie Contributor | 73 | 3.40 | $4.68M | | 3-and-D Wing | 21 | 1.98 | $10.04M | | High-Volume Scorer | 3 | 1.48 | $6.84M | | Defensive Specialist | 24 | 1.39 | $9.61M | | Sixth Man | 16 | 1.35 | $11.53M | | Prime Star | 40 | 0.38 | $36.91M | | Veteran Star | 46 | 0.35 | $34.97M | 
+
+Role Players and Rookie Contributors produce roughly **10 times the PIE per dollar** of Prime Stars and Veteran Stars. While stars deliver substantially more raw production (avg PIE ~0.12 vs ~0.09), the salary gap is far larger than the production gap, creating a large efficiency penalty for star-tier contracts. This pattern is visible in: <img width="1968" height="1168" alt="image" src="https://github.com/user-attachments/assets/06df6185-3120-423f-88a0-9cf09d5828ac" />
+
+### Aging stars are not discounted
+Despite a 6-year average age difference (25 vs. 31), Prime Stars and Veteran Stars have nearly identical EtD ratios (0.381 vs. 0.346). This suggests the NBA's salary structure does not meaningfully discount aging stars relative to their younger counterparts within the high-salary tier. Once a player crosses the ~$20M threshold, market pricing appears largely insensitive to age. The salary distribution by archetype graph shows the two groups occupying overlapping salary ranges despite their different career stages. 
+<img width="2168" height="1167" alt="image" src="https://github.com/user-attachments/assets/ace14cce-59b4-4805-894f-e953f3dc8b5c" />
+
 ### Future Works
 
 ### Challenges
