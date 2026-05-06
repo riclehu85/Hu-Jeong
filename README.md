@@ -165,6 +165,13 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 <img width="2169" height="1768" alt="image" src="https://github.com/user-attachments/assets/20abf59f-93d5-445f-96b6-cc073e383913" />
 
 ## Future Works
+### Lessons Learned
+A major takeaway was the limitation of individual defensive metrics. We learned that Defensive Rating is often a team statistic in disguise. A great example would be how an average defender on an elite defensive team (like the Celtics) will appear mathematically superior to an elite defender on a poor team, regardless of their true impact as an individual player. This can also be said of many other individual statistics, such as how a team without any playmaking could lead to a single player on that team having an oversized impact in terms of scoring. However, we found that the greatest example of how a team can influence individual metrics is still through the defensive metrics. 
+
+We initially hypothesized that rookie contracts would be the only source of high ROI. However, the data showed that the "Sixth Man" archetype (veterans on sub-$10M deals) often provides a more stable ROI than rookies, who may have high efficiency but inconsistent availability. There are also additional outside variables that may come into play which elevates these players even more that doesn’t show clearly in game statistics, such as their presence and leadership during tough or high-pressure games like the playoffs. 
+
+Going back once again to one of the major challenges we faced initially, integrating two datasets without a common ID (using name-matching instead) taught us the importance of data cleaning in data science. Managing issues such as diacritics (like the "ć" in Dončić) and suffixes showed us that carelessly using data without cleaning could lead to many unintended consequences, such as having multiple repeat players or simply having a couple players deleted from the clean database. 
+
 
 ## Challenges
 
