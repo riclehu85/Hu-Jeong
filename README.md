@@ -89,36 +89,43 @@ Iniital inspection of the merged dataset revealed 36 duplicate rows due to Baske
 
 
 ## Data Cleaning
-Loads base stats and advanced stats from the API and merges them on PLAYER_ID into a single stats dataframe
-- Eliminates any data fragmentation by using unique player id instead of names
-- Ensures that the player’s base and advances stats are unified under a single 
+### Loads base stats and advanced stats from the API and merges them on PLAYER_ID into a single stats dataframe
+- This process eliminates data fragmentation by utilizing the unique PLAYER_ID as a primary key rather than player names, which has had some inconsistencies 
+- Ensures that the player’s base and advances stats are unified under a single and comprehensive profile
 
-Selects useful columns from both databases
-- Filters out any variables not used in this research while keeping useful columns in cleaned datasets
-- Isolates useful variables and data from ones irrelevant to our analysis and research questions
 
-Standardizes column names (snake_case)
+### Selects useful columns from both databases and filters out variables not used in this research
+- By isolating high-value variables and discarding data irrelevant to our specific research questions, we reduce high-dimensionality noises
+
+
+### Standardizes column names (snake_case)
 - Snake case is a formatting style where spaces in phrases are replaced with underscores (_) and all letters are lowercase
-- By standardizing all of our columns by implementing snake_case, it allows our analysis scripts to reference variables without errors caused by differences in spacing or capitalization
+- Standardizing all of our columns by implementing snake_case ensures consistency throughout the database and allows our analysis scripts to reference variables without errors
 
-Computes per-game versions of counting stats
-- It allows us to compare the efficiency of a player who played 82 games directly against one who played 50, valuing their per-minute impact rather than just their total seasonal accumulation
+### Computes per-game versions of counting stats
+- Corrects volume bias, allowing us to compare the efficiency of a player who played 70 games directly against one who played 50 through per-game statistics
+- Values their per-minute impact rather than just their total seasonal accumulation
 
-Strips whitespace from player names
-- Stripping the whitespace helps to prevent failed record linkage by helping to match names in the integration process
-- It then becomes easier in our future operations to integrate the two datasets together to make nba_merged.csv using player names as a primary key. 
 
-Converts salary strings ('$1,234,567') to numeric values
-- By converting the salary and guaranteed columns from data type(str) to data type(int), we make it easier to make calculations regarding our EtD ratio.
+### Strips whitespace from player names
+- Stripping the whitespace is a critical step to prevent failed record linkage
+- This sanitization ensures that when we integrate the stats dataframe with the salary data to create nba_merged.csv, the player names match perfectly
 
-Drops rows missing critical fields
-- Filtering out null spaces allows for our analysis to be implemented without any errors and prevents any statistical outliers in our data
+### Converts salary strings ('$1,234,567') to numeric values
+- Strips currency symbols from the salary and guaranteed columns to then convert from data type(str) to data type(int)
+- Makes it easier to make calculations regarding our EtD ratio and regression analysis
 
-Filters out players with fewer than MIN_GAMES_PLAYED games (8 games or less)
-- By dropping players with 8 games played or less, we remove a source of data which could prove to be a statistical outlier and ensure our data is reliable 
+### Drops rows missing critical fields
+- Filtering out null values and incomplete entries ensures analytical completeness to prevent any errors
+- Ensures that every player has a verified value for both their salary and their statistical output
 
-Deduplicates contracts (Basketball Reference lists one row per future contract year per player)
-- Removing redundant rows from the data given by Basketball Reference, since their original data has a column for each year for a given player’s contract, while we are only focusing on the current 2025-2026 season for each individual player’s salary
+### Filters out players with fewer than 8 games (MIN_GAMES_PLAYED)
+- Mitigates the impact of statistical outliers by removing players with extremely small sample sizes (games played)
+- Statistical outliers can skew the results of our analysis and removing these players improves our findings and accuracy
+
+### Deduplicates contracts (Basketball Reference lists one row per future contract year per player)
+- Basketball-Reference provides a longitudinal view by listing one row for every future year of a player's contract
+- We remove these redundant rows to isolate only the salary for the current 2025–2026 season
 
 
 ## Findings
