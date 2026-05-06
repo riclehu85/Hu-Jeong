@@ -170,8 +170,6 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 
 ## Reproducing
 
-## Reproducing
-
 ### Prerequisites
 
 - Python 3.11 or newer
