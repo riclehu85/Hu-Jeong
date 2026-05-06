@@ -1,4 +1,4 @@
-# Final Project Report: ROI of Current NBA Players ('23-'25)
+# Final Project Report: ROI of Current NBA Players ('25-'26)
 
 #### Contributors: Alexander Jeong (ajeong4) & Rick Hu (rickhu2)
 
