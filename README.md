@@ -164,3 +164,33 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 ## Reproducing
 
 ## References
+
+## References
+### Datasets
+
+National Basketball Association. (2025). *NBA player statistics, 2024-25 regular season* [Data set]. Retrieved via the `nba_api` Python client from https://stats.nba.com. Accessed November 2025.
+
+Sports Reference LLC. (2025). *NBA player contracts* [Data set]. Basketball Reference. https://www.basketball-reference.com/contracts/players.html. Accessed November 2025.
+
+### Software
+
+Hunter, J. D. (2007). Matplotlib: A 2D graphics environment. *Computing in Science & Engineering*, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
+
+McKinney, W. (2010). Data structures for statistical computing in Python. In S. van der Walt & J. Millman (Eds.), *Proceedings of the 9th Python in Science Conference* (pp. 56–61). https://doi.org/10.25080/Majora-92bf1922-00a
+
+Bachmann, M. (2024). *RapidFuzz: Rapid fuzzy string matching* (Version 3.x) [Computer software]. https://github.com/maxbachmann/RapidFuzz
+
+Patel, S. (2024). *nba_api: An API client package to access the APIs for NBA.com* (Version 1.x) [Computer software]. https://github.com/swar/nba_api
+
+Waskom, M. L. (2021). seaborn: Statistical data visualization. *Journal of Open Source Software*, 6(60), 3021. https://doi.org/10.21105/joss.03021
+
+Python Software Foundation. (2024). *Python language reference, version 3.11*. https://www.python.org
+
+### Background and context
+
+Lowe, Z. (2023). NBA's new CBA, the second apron, and the future of roster construction. *ESPN*. https://www.espn.com (Used as background context on the salary cap structure motivating the research question.)
+
+NBA. (2025). *Player Impact Estimate (PIE) - Stat Glossary*. https://www.nba.com/stats/help/glossary
+
+Oliver, D. (2004). *Basketball on paper: Rules and tools for performance analysis*. Brassey's, Inc. (Foundational work on advanced basketball metrics.)
+
