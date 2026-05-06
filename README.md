@@ -168,6 +168,18 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 
 ## Challenges
 
+### Integration Challenges
+One of the most significant challenges we faced in the beginning was the lack of a universal primary key to use for integration. As mentioned previously in the Dataset Profile section, the two datasets that we used did not have any shared unique identifier. ‘nba_api` used NBA's internal `PLAYER_ID` as an identifier while Basketball Reference only used player names. As such, this required us to do much further work in integration, requiring us to do a normalized-name matching approach, combining exact and fuzzy matching. The final result of our approach was that we successfully matched 79% of players (411/520) to a contract row, while the remainder were predominantly free agents, two-way contract players, and mid-season waivers/buyouts.
+
+### Limitations of Database
+Going further into detail about players that we couldn’t match brings us into another challenge that we faced, which was the structural limitations faced by Basketball Reference. While the NBA API provides an exhaustive list of every player that has played, Basketball Reference’s contract data is primarily made up of active standard rosters. As mentioned in the integration challenges, many of the players we were unable to match were 10-day contract players, two-way G-League players, and veterans who were waived/bought out mid-season (e.g., Ben Simmons). These players often vanish from standard contract tables as they don’t have a clearly defined contract and salary for Basketball Reference to use, making us unable to use them during our analysis. 
+
+### Outliers in EtD ratios
+During our experimentation with the EtD ratios, we found many statistical outliers which lead to astronomically high Player Impact Estimates (PIE), despite never even hearing their names before. When looking closer at why this occurred, we found that these players were mostly benchwarmers who only played a couple minutes a match, but came out with statistics like 1 block and 2 rebounds, giving them much higher PIE than they should have received. As such, we had to go back and filter from simply having an 8 game minimum to having another filter of having played 8 games minimum and 250 total minutes minimum. This ensured that the ROI figures we reported were based on sustainable roles rather than short-lived appearances, narrowing our focus to a clean dataset of 387 reliable rotation players.
+
+### Complexity in Archetyping Players
+Since a player’s role in the NBA is generally more fluid, assigning players to archetypes (e.g., 3-and-D vs. Role Player) based on static stats was challenging. There were many outside factors that we would have had to consider which we didn’t have access to or were not shown in the player statistics. As such, we had to rely on a combination of Usage Rate, Three-Point Volume, and PIE to categorize players into archetypes, while realizing that some hybrid players may be forced into roles when they are more flexible in their team. 
+
 ## Reproducing
 
 ### Prerequisites
