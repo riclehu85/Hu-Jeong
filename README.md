@@ -2,7 +2,7 @@
 
 ## Contributors: Alexander Jeong (ajeong4) & Rick Hu (rickhu2)
 
-### Summary
+## Summary
 Our goal for this project was to do an analysis on the statistics of NBA players to try and find if there was a way to quantify Return on Investment (ROI) for NBA players. In the modern era of the NBA, the implementation of a rigorous salary cap, further complicated by the recent introduction of the "second apron" luxury tax tiers, has transformed roster construction from just having high value players to having to balance value and efficiency for financial optimization. 
 
 This project seeks to quantify this phenomenon by calculating the ROI for NBA players, determining which specific player archetypes and skill sets provide the most efficient path to creating overall value for teams. A team’s success depends not just on pure raw talent or skill, but also on identifying valuable players (i.e. players whose statistical contributions exceed their contract cost). Our analysis specifically focuses on the 2023-2024 and 2024-2025 seasons, providing a snapshot of the league’s current players and conditions. The motivation behind this research stems from the disparity between perceived market value and actual statistical impact, with discourse surrounding NBA stars such as Anthony Davis and Zion Williamson.  
@@ -18,7 +18,7 @@ We assigned each player to one of eight archetypes based on age, minutes, salary
 
 Our analysis of 387 players reveals a substantial premium that NBA teams pay for star-tier production. **Rookie Contributors and Role Players produce roughly 10 times the PIE per dollar of Veteran Stars and Prime Stars** (avg EtD ~3.4-3.7 vs. ~0.35). Despite a 6-year average age difference, Prime Stars and Veteran Stars show statistically indistinguishable EtD ratios (0.381 vs. 0.346), suggesting the league's salary structure does not meaningfully discount aging stars relative to their younger counterparts within the high-salary tier. Sixth Men emerged as a notable value archetype (avg EtD 1.35), producing roughly 3.5x the PIE per dollar of Prime Stars while contributing meaningful scoring off the bench.
 
-### Data Profile
+## Data Profile
 
 ### Dataset 1: NBA player statistics (traditional and advanced)
 **Source:** API Client for official NBA
@@ -55,11 +55,11 @@ during cleaning (see Data Cleaning section).
 The two datasets have no shared unique identifier. `nba_api` uses NBA's internal `PLAYER_ID` while Basketball Reference uses player names. This required a normalized-name matching approach combining exact and fuzzy matching, described in detail in the Data Cleaning and Challenges sections. Of the 520 players in our cleaned stats dataset, 411 (79%) were successfully matched to a contract row, with the remainder predominantly free agents, two-way contract players, and mid-season waivers/buyouts who do not appear in Basketball Reference's contract listings.
 
 
-### Data Quality
+## Data Quality
 
-### Data Cleaning
+## Data Cleaning
 
-### Findings
+## Findings
 
 Our analysis of 387 NBA players across the 2024-25 regular season reveals a substantial premium that the league pays for star-tier production, alongside several pockets of meaningful market inefficiency. We summarize findings using the Efficiency-to-Dollar (EtD) metric, computed as PIE × 100 divided by salary in millions. 
 
@@ -95,10 +95,10 @@ Plotting salary against PIE (`outputs/figures/salary_vs_pie_scatter.png`) reveal
 The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contributors on minimum or near-minimum contracts. The leaderboard's ceiling — Jaden Springer at EtD 89, on a $70k 10-day contract — illustrates how raw EtD is dominated by contract-floor players. Within the high-salary tier (>$15M), Shai Gilgeous-Alexander stands out as the league's most efficient star at $38.3M with PIE 0.199 (EtD 0.519), substantially outperforming the Prime Star average of 0.381.
 <img width="2169" height="1768" alt="image" src="https://github.com/user-attachments/assets/20abf59f-93d5-445f-96b6-cc073e383913" />
 
-### Future Works
+## Future Works
 
-### Challenges
+## Challenges
 
-### Reproducing
+## Reproducing
 
-### References
+## References
