@@ -5,13 +5,13 @@ Generated from: data\processed\nba_player_stats_cleaned.csv, data\processed\nba_
 Profile: stats (cleaned)
 ======================================================================
 
-Rows:    520
+Rows:    442
 Columns: 32
 
 Column types:
   player_id            int64
-  player_name          object
-  team                 object
+  player_name          str
+  team                 str
   age                  float64
   gp                   int64
   minutes              float64
@@ -40,7 +40,7 @@ Column types:
   blocks_pg            float64
   fg3a_pg              float64
   minutes_pg           float64
-  season               object
+  season               str
 
 Missing values per column:
   (none)
@@ -56,11 +56,11 @@ Rows:    487
 Columns: 5
 
 Column types:
-  player_name          object
-  team                 object
+  player_name          str
+  team                 str
   salary               float64
   guaranteed           float64
-  season               object
+  season               str
 
 Missing values per column:
   guaranteed           19 (3.9%)
@@ -72,13 +72,13 @@ Duplicate player_names: 0
 Profile: merged
 ======================================================================
 
-Rows:    411
+Rows:    387
 Columns: 38
 
 Column types:
   player_id            int64
-  player_name          object
-  team_stats           object
+  player_name          str
+  team_stats           str
   age                  float64
   gp                   int64
   minutes              float64
@@ -107,8 +107,8 @@ Column types:
   blocks_pg            float64
   fg3a_pg              float64
   minutes_pg           float64
-  season               object
-  team_contract        object
+  season               str
+  team_contract        str
   salary               float64
   guaranteed           float64
   production_score     float64
@@ -116,7 +116,7 @@ Column types:
   etd_ratio            float64
 
 Missing values per column:
-  guaranteed           18 (4.4%)
+  guaranteed           17 (4.4%)
 
 Duplicate rows: 0
 Duplicate player_names: 0
@@ -126,14 +126,14 @@ Numeric distributions: stats
 ----------------------------------------------------------------------
 
           age      gp  minutes   points  rebounds  assists  steals  blocks  fg_pct  fg3_pct  ft_pct  plus_minus
-count  520.00  520.00   520.00   520.00    520.00   520.00  520.00  520.00  520.00   520.00  520.00      520.00
-mean    26.34   50.22  1137.83   537.20    208.04   125.26   38.69   22.99    0.46     0.31    0.74        0.38
-std      4.30   21.54   778.37   471.21    174.94   130.48   29.77   25.16    0.08     0.12    0.15      191.37
-min     19.00    8.00    16.14     3.00      3.00     0.00    0.00    0.00    0.12     0.00    0.00     -798.00
-25%     23.00   33.00   445.75   147.75     70.00    33.00   14.75    6.00    0.41     0.28    0.69      -86.25
-50%     25.00   54.00  1056.41   424.50    175.50    83.00   34.00   15.00    0.45     0.34    0.77      -17.00
-75%     29.00   69.00  1783.59   773.50    290.75   163.25   58.00   31.00    0.50     0.38    0.83       61.75
-max     40.00   82.00  3036.08  2484.00   1010.00   880.00  229.00  176.00    0.80     0.67    1.00      918.00
+count  442.00  442.00   442.00   442.00    442.00   442.00  442.00  442.00  442.00   442.00  442.00      442.00
+mean    26.55   55.98  1316.13   623.93    240.64   145.56   44.73   26.57    0.47     0.32    0.76        2.27
+std      4.32   17.71   706.97   459.22    169.94   131.42   28.23   25.64    0.07     0.11    0.10      207.08
+min     19.00    9.00   251.45    67.00     22.00     7.00    2.00    0.00    0.32     0.00    0.23     -798.00
+25%     23.00   42.00   669.73   255.25    115.00    55.00   23.00   10.00    0.42     0.31    0.71     -105.75
+50%     26.00   59.00  1254.34   530.50    209.00   104.00   39.00   18.00    0.46     0.35    0.78      -20.50
+75%     29.00   71.00  1875.54   838.50    314.75   186.00   61.00   34.00    0.50     0.38    0.83       99.75
+max     40.00   82.00  3036.08  2484.00   1010.00   880.00  229.00  176.00    0.80     0.53    1.00      918.00
 
 ----------------------------------------------------------------------
 Numeric distributions: contracts
@@ -171,13 +171,13 @@ Suspicious values: merged
 Integration coverage
 ======================================================================
 
-Stats players (after filtering):     520
+Stats players (after filtering):     442
 Contracts players (after dedup):     487
-Successfully merged:                 411
-Match rate (vs. stats):              79.0%
+Successfully merged:                 387
+Match rate (vs. stats):              87.6%
 
-Stats players unmatched:             109
-Contracts players unmatched:         76
+Stats players unmatched:             55
+Contracts players unmatched:         100
 
 Unmatched players were investigated manually and identified as
 predominantly free agents, two-way contract players, and mid-season
@@ -201,14 +201,14 @@ Jeremiah Robinson-Earl  131970.0            1020.0    7729.03
             Chris Paul 2296274.0            2235.7     973.62
 
 Bottom 10 by EtD (worst value):
-      player_name     salary  production_score  etd_ratio
-      Joel Embiid 55224526.0             829.5      15.02
-   Leonard Miller  2221677.0              39.2      17.64
-   Brandon Ingram 38095238.0             713.5      18.73
-    Bobi Klintman  1955377.0              39.9      20.41
-      Kobe Bufkin  5480297.0             113.7      20.75
-Mitchell Robinson 12954546.0             295.7      22.83
-    Pacôme Dadiet  2847600.0              69.1      24.27
- Matisse Thybulle 11550000.0             300.4      26.01
-      Paul George 51666090.0            1384.8      26.80
-     Cam Christie  1955377.0              53.4      27.31
+        player_name     salary  production_score  etd_ratio
+        Joel Embiid 55224526.0             829.5      15.02
+     Brandon Ingram 38095238.0             713.5      18.73
+  Mitchell Robinson 12954546.0             295.7      22.83
+   Matisse Thybulle 11550000.0             300.4      26.01
+        Paul George 51666090.0            1384.8      26.80
+    Khris Middleton 33296296.0             915.4      27.49
+      Kawhi Leonard 50000000.0            1384.8      27.70
+     Grant Williams 13645500.0             381.9      27.99
+Robert Williams III 13285713.0             381.1      28.68
+        Maxi Kleber 11000000.0             333.5      30.32
