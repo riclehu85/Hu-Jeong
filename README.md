@@ -20,6 +20,33 @@ Our analysis of 387 players reveals a substantial premium that NBA teams pay for
 
 ### Data Profile
 
+### Dataset 1: NBA player statistics (traditional and advanced)
+**Source:** API Client for official NBA
+
+**Format:** JSON response objects converted to CSV. Two views are pulled: "Base" (traditional box score) and "Advanced" (efficiency and on/off metrics). 
+
+**Repository location:** - `data/raw/nba_player_stats.csv` — base/traditional stats (569 rows, 75 columns) - `data/raw/nba_player_advanced.csv` — advanced metrics (569 rows, 76 columns) 
+
+**Structure and content:** Each row corresponds to one player's full-season aggregated 2024-25 regular-season statistics. The base file contains traditional box score totals (PTS, REB, AST, STL, BLK, etc.), shooting percentages, and counting metrics. The advanced file contains efficiency and impact metrics including PIE (Player Impact Estimate), Offensive/Defensive/Net Rating, Usage Percentage, True Shooting Percentage, and Pace. 
+
+**Characteristics:** This data is comprehensive and authoritative. It is the NBA’s records. Coverage includes every player who appeared in at least one game during the regular season. Data is updated nightly throughout the season and reflects final season values for completed seasons. 
+
+**Relationship to research questions:** This dataset is the production half of the EtD ratio. The advanced metrics, particularly PIE, allow us to capture overall player impact in a single number that goes beyond simple counting stats. The advanced metrics also enable archetype assignment. For example, identifying 3-and-D Wings requires three-point attempt volume, three-point percentage, defensive rating, and usage rate, all of which come from this dataset. 
+
+**Ethical and legal constraints:** Data on stats.nba.com is owned by the NBA. The `nba_api` client does not require authentication but accesses the underlying API which is technically a non-public endpoint. Use is permitted for non-commercial academic research. There are no privacy concerns as all player statistics are public performance data, not personal information. We accessed data with reasonable rate limits (one-second pauses between calls) to avoid impacting service availability. 
+
+### Dataset 2: NBA Contract Data
+Source: 2025-26 NBA Player Contracts | Basketball-Reference.com 
+**Format:** HTML table parsed and saved as CSV
+**Repository location:** - `data/raw/nba_contracts_raw.csv` (525 rows in raw form, 487 after cleaning and deduplication) 
+**Structure and content:** Each row originally corresponds to one contract-year per player. The dataset contains player names, current team abbreviations, salary by year (2025-26 through 2030-31), and total guaranteed money. Our analysis uses the 2025-26 salary figure as our cost variable.
+**Characteristics:** The data represents a financial snapshot of NBA contracts as listed on Basketball Reference at the time of acquisition. It is frequently updated to reflect trades, waivers, and contract restructuring. The data inherently lists multiple rows per player corresponding to future contract years; this required deduplication during cleaning (see Data Cleaning section). 
+**Ethical and legal constraints:** Data is owned by Sports Reference LLC. Player salaries are a matter of public record. Use is permissible for non-commercial academic research under the source's terms of use. 
+**Relationship to research questions:** This dataset is the cost half of the EtD ratio. Without precise salary figures, it would be impossible to quantify the cost of a unit of production. The salary data also enables archetype assignment. 
+### Integration Challenge
+The two datasets have no shared unique identifier. `nba_api` uses NBA's internal `PLAYER_ID` while Basketball Reference uses player names. This required a normalized-name matching approach combining exact and fuzzy matching, described in detail in the Data Cleaning and Challenges sections. Of the 520 players in our cleaned stats dataset, 411 (79%) were successfully matched to a contract row, with the remainder predominantly free agents, two-way contract players, and mid-season waivers/buyouts who do not appear in Basketball Reference's contract listings.
+
+
 ### Data Quality
 
 ### Data Cleaning
