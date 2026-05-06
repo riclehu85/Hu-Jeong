@@ -170,7 +170,107 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 
 ## Reproducing
 
-## References
+## Reproducing
+
+### Prerequisites
+
+- Python 3.11 or newer
+- Git
+
+### Steps
+
+**Step 1. Clone the repository**
+
+```bash
+   git clone https://github.com/<your-username>/Hu-Jeong.git
+   cd Hu-Jeong
+```
+
+**Step 2. Create and activate a virtual environment**
+
+   On Windows (PowerShell):
+```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+```
+
+   On macOS/Linux:
+```bash
+   python -m venv .venv
+   source .venv/bin/activate
+```
+
+**Step 3. Install dependencies**
+
+```bash
+   pip install -r requirements.txt
+```
+
+**Step 4. Verify input data is present**
+
+   The raw input files are committed to the repository under `data/raw/`:
+   - `nba_player_stats.csv` (NBA API base stats)
+   - `nba_player_advanced.csv` (NBA API advanced stats)
+   - `nba_contracts_raw.csv` (Basketball Reference contracts)
+
+   No download step is required.
+
+**Step 5. Run the full pipeline**
+
+```bash
+   python run_all.py
+```
+
+   This executes all six stages of the analysis:
+   1. Acquire NBA API data (skipped if raw files already exist)
+   2. Clean both datasets
+   3. Integrate them via normalized-name matching
+   4. Assign archetypes and compute the EtD ratio
+   5. Profile the data quality
+   6. Generate the four visualizations
+
+   To force a fresh API pull (overwriting the committed raw stats files):
+```bash
+   python run_all.py --refresh
+```
+
+### Outputs
+
+After running, the following files will be produced or refreshed:
+
+- `data/processed/nba_player_stats_cleaned.csv` — cleaned NBA stats
+- `data/processed/nba_contracts_cleaned.csv` — cleaned and deduplicated contracts
+- `data/processed/nba_merged.csv` — integrated dataset (411 players)
+- `data/processed/nba_merged_with_archetypes.csv` — final analytical dataset (387 players after minimum-minutes filter, with archetype labels and EtD ratios)
+- `data/processed/archetype_summary.csv` — per-archetype summary statistics
+- `data/processed/data_quality_report.txt` — data profile and integration coverage report
+- `data/processed/unmatched_players.csv` — audit trail of players that failed to match across datasets
+- `outputs/figures/salary_vs_pie_scatter.png` — Salary vs. PIE colored by archetype
+- `outputs/figures/avg_etd_by_archetype.png` — Bar chart of average EtD by archetype
+- `outputs/figures/top_etd_leaderboard.png` — Top 20 NBA cap-efficiency leaderboard
+- `outputs/figures/salary_by_archetype_box.png` — Salary distribution by archetype
+
+### Running individual stages
+
+If you want to run a single stage in isolation, all scripts are in `scripts/` and can be invoked directly:
+
+```bash
+python scripts/nba_API_RAW.py
+python scripts/data_cleaning.py
+python scripts/data_integration.py
+python scripts/assign_archetypes.py
+python scripts/profile_data.py
+python scripts/make_visualizations.py
+```
+
+Each script handles its own paths and can be re-run independently as long as upstream outputs exist.
+
+### Troubleshooting
+
+- **`ModuleNotFoundError`**: Verify your virtual environment is activated. The prompt should display `(.venv)` at the start.
+- **NBA API connection error**: The NBA API can rate-limit if called too frequently. Wait a few minutes and retry, or run without `--refresh` to use the committed raw files.
+- **Unicode errors in terminal output**: Player names contain accented characters. Scripts use UTF-8 encoding for stdout, but if you see character encoding errors, your terminal may need to be set to UTF-8 (e.g., `chcp 65001` on Windows).
+
 
 ## References
 ### Datasets
