@@ -86,6 +86,8 @@ The team-context DEF_RATING used to identify Defensive Specialists combines indi
 Iniital inspection of the merged dataset revealed 36 duplicate rows due to Basketball Reference’s contract table structure, which lists one row per future contract year. We resolved this by deduplicating on player_name. Retaining the row with the highest guaranteed amount. Documented in Data Cleaning section. 
 
 
+
+
 ## Data Cleaning
 Loads base stats and advanced stats from the API and merges them on PLAYER_ID into a single stats dataframe
 - Eliminates any data fragmentation by using unique player id instead of names
