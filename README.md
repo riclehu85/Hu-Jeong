@@ -56,6 +56,35 @@ The two datasets have no shared unique identifier. `nba_api` uses NBA's internal
 
 
 ## Data Quality
+After cleaning and deduplication, the contracts dataset contains 487 players with 5 columns. 19 of 487 rows (3.9%) are missing the ” guaranteed” amount, representing players on partial-guarantee deals where Basketball Reference does not list a specific guaranteed figure. Salaries range from $70,732 (10-day contract) to $59.6 Million (supermax contract), with a median of $5.7 Million. The presence of contracts below $500,000 is not a data quality issue. This reflects legitimate 10-day signings and waiver claims that pay prorated portions of the league minimum.
+
+### Integration coverage
+411 of 520 stats-side players (79%) successfully matched to a contract record. The 109 unmatched stats players were investigated manually. The overwhelming majority are players who do not appear on Basketball Reference's contracts page at all, including:
+Free agents: waived or bought out during the season (e.g. Ben Simmons (waived by Clippers in Feb 2025))
+Two-way contract players: signed to G-League/NBA dual contracts not listed in the standard contracts table
+10-day contract players: signed late in the season
+Mid-season replacements: who joined teams after Basketball Reference’s snapshot
+This is a structural limitation of the source rather than a defect in our pipeline. Documented in the Findings section.
+
+### Small-sample players
+Players near the 8-game minimum threshold can produce extreme PIE values that don’t represent sustainable production. To address this, we added a 250-minute total minutes filter on top of the games filter. This reduced our final analyzed dataset to 387 players. Without this filter, players like Leonard Miller (PIE of 0.202 in limited minutes) would have ranked among the league’s most impactful by an advanced metric while having played too few games for that metric to be meaningful.
+
+### Player name inconsistencies
+
+Manually investigation revealed that there were a couple of naming differences across datasets:
+Punctuation differences (e.g. “P.J. Tucker” vs “PJ Tucker”)
+Diacritic difference (e.g. “Luka Dončić” vs “Luka Doncic”)
+Suffix Differences (e.g. “Tim Hardaway Jr.” vs  “Tim Hardaway”)
+Our normalization function (‘scripts/data_integration.py’) handles all three Unicode decomposition, ASCII coercion, and regex-based suffix removal.
+
+### Defensive metric limitations
+
+The team-context DEF_RATING used to identify Defensive Specialists combines individual defensive ability with team defensive infrastructure. Player on an elite defensive team appears to have a strong DEF_RATING regardless of their personal contribution. Better identification would require player-traching data we do not have access to. 
+
+### Duplicate contract rows
+
+Iniital inspection of the merged dataset revealed 36 duplicate rows due to Basketball Reference’s contract table structure, which lists one row per future contract year. We resolved this by deduplicating on player_name. Retaining the row with the highest guaranteed amount. Documented in Data Cleaning section. 
+
 
 ## Data Cleaning
 Loads base stats and advanced stats from the API and merges them on PLAYER_ID into a single stats dataframe
