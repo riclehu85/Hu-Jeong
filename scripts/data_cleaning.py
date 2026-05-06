@@ -60,8 +60,6 @@ print(f"  advanced stats: {len(advanced)} rows")
 print(f"  contracts:      {len(contracts)} rows")
 
 
-# Merge base and advanced stats on PLAYER_ID
-# Keep only the advanced columns we want, to avoid duplicating cols from base.
 # PLAYER_ID is the merge key.
 adv_cols_keep = [
     "PLAYER_ID",
@@ -163,8 +161,7 @@ contracts = contracts.rename(
 
 
 # Per-game versions of counting stats
-# (Per-game lets us compare players who missed games fairly. The NBA API
-# returns season totals, so we divide by GP.)
+
 per_game_cols = ["points", "rebounds", "assists", "steals", "blocks", "fg3a", "minutes"]
 for col in per_game_cols:
     if col in stats.columns:
@@ -204,19 +201,12 @@ before = len(stats)
 stats = stats[stats["gp"] >= MIN_GAMES_PLAYED]
 print(f"Filtered out {before - len(stats)} stats rows with fewer than {MIN_GAMES_PLAYED} games played")
 
-# Minimum minutes filter: catches small-sample players whose rate stats can
-# produce extreme advanced metric values (e.g., PIE > 0.20) that don't
-# represent sustainable production. 250 total minutes ≈ 10 minutes per game
-# across 25 games, a reasonable rotation-player threshold.
 MIN_TOTAL_MINUTES = 250
 
 before = len(stats)
 stats = stats[stats["minutes"] >= MIN_TOTAL_MINUTES]
 print(f"Filtered out {before - len(stats)} stats rows with fewer than {MIN_TOTAL_MINUTES} minutes played")
 
-# (Basketball Reference's contracts table includes one row per future contract
-# year per player. We collapse to one row per player, keeping the row with
-# the highest guaranteed amount, which represents the most-committed year.)
 before = len(contracts)
 contracts = (
     contracts.sort_values("guaranteed", ascending=False, na_position="last")

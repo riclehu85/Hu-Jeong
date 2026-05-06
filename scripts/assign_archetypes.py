@@ -39,9 +39,7 @@ import pandas as pd
 # Force UTF-8 output so terminal doesn't crash on accented player names
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# ---------------------------------------------------------------------------
 # Paths
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 os.chdir(PROJECT_ROOT)
 
@@ -50,9 +48,7 @@ MERGED_OUT = Path("data/processed/nba_merged_with_archetypes.csv")
 SUMMARY_OUT = Path("data/processed/archetype_summary.csv")
 
 
-# ---------------------------------------------------------------------------
-# Archetype thresholds (top of file so they're easy to defend in the README)
-# ---------------------------------------------------------------------------
+# Archetype thresholds
 ROOKIE_MAX_AGE = 22
 
 VETERAN_MIN_AGE = 28
@@ -77,22 +73,15 @@ SIXTH_MAN_MAX_MINUTES_PG = 28
 
 DEF_SPECIALIST_MAX_USAGE = 0.18
 DEF_SPECIALIST_MIN_MINUTES_PG = 15
-# The defensive threshold is computed dynamically as the league 25th percentile
-# of DEF_RATING, since "elite defender" is relative to the league.
 
-
-# ---------------------------------------------------------------------------
 # Load
-# ---------------------------------------------------------------------------
 print("Loading merged dataset...")
 df = pd.read_csv(MERGED_IN)
 print(f"  {len(df)} rows")
 
 
-# ---------------------------------------------------------------------------
 # Compute league percentile thresholds for DEF_RATING
 # (Lower DEF_RATING = better defense.)
-# ---------------------------------------------------------------------------
 DEF_RATING_MEDIAN = df["def_rating"].median()
 DEF_RATING_TOP_QUARTILE = df["def_rating"].quantile(0.25)
 
@@ -100,9 +89,7 @@ print(f"League median DEF_RATING:        {DEF_RATING_MEDIAN:.2f} (3-and-D thresh
 print(f"League 25th percentile DEF_RATING: {DEF_RATING_TOP_QUARTILE:.2f} (Def. Specialist threshold)")
 
 
-# ---------------------------------------------------------------------------
 # Assign archetypes
-# ---------------------------------------------------------------------------
 def assign_archetype(row: pd.Series) -> str:
     """Return the archetype label for a single player row."""
     # 1. Rookie Contributor
@@ -164,16 +151,12 @@ def assign_archetype(row: pd.Series) -> str:
 df["archetype"] = df.apply(assign_archetype, axis=1)
 
 
-# ---------------------------------------------------------------------------
 # Recompute EtD using PIE
-# ---------------------------------------------------------------------------
 df["pie_x100"] = df["pie"] * 100
 df["etd_pie"] = df["pie_x100"] / df["salary_millions"].replace(0, pd.NA)
 
 
-# ---------------------------------------------------------------------------
 # Per-archetype summary
-# ---------------------------------------------------------------------------
 summary = (
     df.groupby("archetype")
     .agg(
@@ -194,9 +177,7 @@ summary = (
 )
 
 
-# ---------------------------------------------------------------------------
 # Save outputs
-# ---------------------------------------------------------------------------
 df.to_csv(MERGED_OUT, index=False)
 summary.to_csv(SUMMARY_OUT)
 
@@ -204,9 +185,7 @@ print(f"\nSaved enriched merged dataset -> {MERGED_OUT}")
 print(f"Saved archetype summary       -> {SUMMARY_OUT}")
 
 
-# ---------------------------------------------------------------------------
 # Print summary
-# ---------------------------------------------------------------------------
 print("\n" + "=" * 70)
 print("ARCHETYPE DISTRIBUTION")
 print("=" * 70)

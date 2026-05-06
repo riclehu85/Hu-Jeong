@@ -77,7 +77,6 @@ def flag_outliers(df: pd.DataFrame, name: str) -> str:
 
     flags = []
 
-    # Negative values that shouldn't be negative
     for col in ["points", "rebounds", "assists", "steals", "blocks", "gp", "minutes"]:
         if col in df.columns:
             count = (df[col] < 0).sum()
@@ -99,7 +98,6 @@ def flag_outliers(df: pd.DataFrame, name: str) -> str:
             if out_of_range > 0:
                 flags.append(f"  {col} out of [0,1] range: {out_of_range}")
 
-    # Zero values that might be real but worth noting
     if "minutes" in df.columns:
         zero_min = (df["minutes"] == 0).sum()
         if zero_min > 0:
@@ -187,7 +185,6 @@ def main():
     # Integration summary
     report_parts.append(integration_summary(stats, contracts, merged))
 
-    # EtD sanity
     report_parts.append(top_bottom_etd(merged))
 
     full_report = "\n".join(report_parts)

@@ -32,11 +32,6 @@ FUZZY_THRESHOLD = 90
 def normalize_name(name: str) -> str:
     """
     Standardize a player name for matching.
-    - Lowercase
-    - Strip accents (Dončić -> doncic)
-    - Remove punctuation (P.J. -> pj)
-    - Remove suffixes (Jr., Sr., II, III, IV)
-    - Collapse whitespace
     """
     if not isinstance(name, str):
         return ""
@@ -66,11 +61,11 @@ contracts = pd.read_csv(CONTRACTS_PATH)
 print(f"  stats:     {len(stats)} rows")
 print(f"  contracts: {len(contracts)} rows")
 
-# Add normalized name column to both
+# Add normalized name column
 stats["name_norm"] = stats["player_name"].apply(normalize_name)
 contracts["name_norm"] = contracts["player_name"].apply(normalize_name)
 
-# Step 1: Exact merge on normalized name
+# Exact merge on normalized name
 contracts_renamed = contracts.rename(columns={"team": "team_contract"})
 stats_renamed = stats.rename(columns={"team": "team_stats"})
 
@@ -91,7 +86,7 @@ contracts_unmatched = contracts_renamed[
 print(f"  unmatched stats players:     {len(stats_unmatched)}")
 print(f"  unmatched contracts players: {len(contracts_unmatched)}")
 
-# Step 2: Fuzzy match the leftovers
+# Fuzzy match the leftovers
 print(f"\nFuzzy matching leftovers (threshold={FUZZY_THRESHOLD})...")
 
 contract_choices = contracts_unmatched["name_norm"].tolist()
@@ -132,7 +127,7 @@ if fuzzy_log:
     for stat_n, contract_n, score in fuzzy_log[:10]:
         print(f"    {stat_n!r}  <->  {contract_n!r}  (score={score})")
         
-# Step 3: Combine exact + fuzzy
+# Combine exact + fuzzy
 merged = pd.concat([exact_merged, fuzzy_merged], ignore_index=True)
 
 # Drop the helper column before saving
@@ -141,12 +136,6 @@ merged = merged.drop(columns=["name_norm"])
 print(f"\nFinal merged dataset: {len(merged)} rows")
 
 # Step 4: Compute Efficiency-to-Dollar (EtD) ratio
-# Simple production score from the columns we have. You can refine this once
-# you pull advanced stats. The point here is to have *something* computable
-# from current data so the pipeline runs end-to-end.
-#
-# production_score is per-game. We then divide by salary in millions to get
-# a ratio that is intuitive: "production points per million dollars."
 merged["production_score"] = (
     merged["points"]
     + 1.2 * merged["rebounds"]
@@ -166,7 +155,6 @@ MERGED_OUT.parent.mkdir(parents=True, exist_ok=True)
 merged.to_csv(MERGED_OUT, index=False)
 print(f"\nSaved merged dataset -> {MERGED_OUT}")
 
-# Track what didn't match for the data quality writeup
 matched_norms_final = set(
     pd.concat([exact_merged["name_norm"], fuzzy_merged.get("name_norm", pd.Series(dtype=str))])
 )
