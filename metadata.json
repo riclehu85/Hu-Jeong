@@ -1,0 +1,85 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "ROI of Current NBA Players",
+  "description": "An integrated dataset combining 2024-25 NBA player statistics (traditional and advanced) with 2025-26 contract data, enriched with derived archetype labels and an Efficiency-to-Dollar (EtD) metric. Used to analyze return on investment across NBA player archetypes.",
+  "url": "https://github.com/riclehu85/Hu-Jeong",
+  "keywords": [
+    "NBA",
+    "basketball analytics",
+    "player statistics",
+    "salary cap",
+    "return on investment",
+    "player archetypes",
+    "Player Impact Estimate",
+    "sports analytics"
+  ],
+  "creator": [
+    {
+      "@type": "Person",
+      "name": "Alexander Jeong",
+      "identifier": "ajeong4"
+    },
+    {
+      "@type": "Person",
+      "name": "Rick Hu",
+      "identifier": "rickhu2"
+    }
+  ],
+  "datePublished": "2026-05-05",
+  "inLanguage": "en",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isBasedOn": [
+    {
+      "@type": "Dataset",
+      "name": "NBA player statistics, 2024-25 regular season",
+      "url": "https://stats.nba.com",
+      "publisher": {
+        "@type": "Organization",
+        "name": "National Basketball Association"
+      }
+    },
+    {
+      "@type": "Dataset",
+      "name": "NBA player contracts",
+      "url": "https://www.basketball-reference.com/contracts/players.html",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Sports Reference LLC"
+      }
+    }
+  ],
+  "variableMeasured": [
+    "player_name",
+    "salary",
+    "pie",
+    "etd_pie",
+    "archetype",
+    "off_rating",
+    "def_rating",
+    "usage_pct",
+    "true_shooting_pct"
+  ],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/csv",
+      "name": "nba_merged_with_archetypes.csv",
+      "contentUrl": "data/processed/nba_merged_with_archetypes.csv",
+      "description": "Final analytical dataset: 387 players with integrated stats, contracts, archetypes, and EtD metrics."
+    },
+    {
+      "@type": "DataDownload",
+      "encodingFormat": "text/csv",
+      "name": "archetype_summary.csv",
+      "contentUrl": "data/processed/archetype_summary.csv",
+      "description": "Per-archetype aggregate statistics."
+    }
+  ],
+  "temporalCoverage": "2024-2026",
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "United States and Canada"
+  }
+}
+
