@@ -1,0 +1,214 @@
+NBA ROI PROJECT - DATA QUALITY REPORT
+Generated from: data\processed\nba_player_stats_cleaned.csv, data\processed\nba_contracts_cleaned.csv, data\processed\nba_merged.csv
+
+======================================================================
+Profile: stats (cleaned)
+======================================================================
+
+Rows:    520
+Columns: 32
+
+Column types:
+  player_id            int64
+  player_name          object
+  team                 object
+  age                  float64
+  gp                   int64
+  minutes              float64
+  points               int64
+  rebounds             int64
+  assists              int64
+  steals               int64
+  blocks               int64
+  fg_pct               float64
+  fg3_pct              float64
+  fg3a                 int64
+  ft_pct               float64
+  plus_minus           int64
+  off_rating           float64
+  def_rating           float64
+  net_rating           float64
+  usage_pct            float64
+  true_shooting_pct    float64
+  pie                  float64
+  ast_pct              float64
+  reb_pct              float64
+  points_pg            float64
+  rebounds_pg          float64
+  assists_pg           float64
+  steals_pg            float64
+  blocks_pg            float64
+  fg3a_pg              float64
+  minutes_pg           float64
+  season               object
+
+Missing values per column:
+  (none)
+
+Duplicate rows: 0
+Duplicate player_names: 0
+
+======================================================================
+Profile: contracts (cleaned)
+======================================================================
+
+Rows:    487
+Columns: 5
+
+Column types:
+  player_name          object
+  team                 object
+  salary               float64
+  guaranteed           float64
+  season               object
+
+Missing values per column:
+  guaranteed           19 (3.9%)
+
+Duplicate rows: 0
+Duplicate player_names: 0
+
+======================================================================
+Profile: merged
+======================================================================
+
+Rows:    411
+Columns: 38
+
+Column types:
+  player_id            int64
+  player_name          object
+  team_stats           object
+  age                  float64
+  gp                   int64
+  minutes              float64
+  points               int64
+  rebounds             int64
+  assists              int64
+  steals               int64
+  blocks               int64
+  fg_pct               float64
+  fg3_pct              float64
+  fg3a                 int64
+  ft_pct               float64
+  plus_minus           int64
+  off_rating           float64
+  def_rating           float64
+  net_rating           float64
+  usage_pct            float64
+  true_shooting_pct    float64
+  pie                  float64
+  ast_pct              float64
+  reb_pct              float64
+  points_pg            float64
+  rebounds_pg          float64
+  assists_pg           float64
+  steals_pg            float64
+  blocks_pg            float64
+  fg3a_pg              float64
+  minutes_pg           float64
+  season               object
+  team_contract        object
+  salary               float64
+  guaranteed           float64
+  production_score     float64
+  salary_millions      float64
+  etd_ratio            float64
+
+Missing values per column:
+  guaranteed           18 (4.4%)
+
+Duplicate rows: 0
+Duplicate player_names: 0
+
+----------------------------------------------------------------------
+Numeric distributions: stats
+----------------------------------------------------------------------
+
+          age      gp  minutes   points  rebounds  assists  steals  blocks  fg_pct  fg3_pct  ft_pct  plus_minus
+count  520.00  520.00   520.00   520.00    520.00   520.00  520.00  520.00  520.00   520.00  520.00      520.00
+mean    26.34   50.22  1137.83   537.20    208.04   125.26   38.69   22.99    0.46     0.31    0.74        0.38
+std      4.30   21.54   778.37   471.21    174.94   130.48   29.77   25.16    0.08     0.12    0.15      191.37
+min     19.00    8.00    16.14     3.00      3.00     0.00    0.00    0.00    0.12     0.00    0.00     -798.00
+25%     23.00   33.00   445.75   147.75     70.00    33.00   14.75    6.00    0.41     0.28    0.69      -86.25
+50%     25.00   54.00  1056.41   424.50    175.50    83.00   34.00   15.00    0.45     0.34    0.77      -17.00
+75%     29.00   69.00  1783.59   773.50    290.75   163.25   58.00   31.00    0.50     0.38    0.83       61.75
+max     40.00   82.00  3036.08  2484.00   1010.00   880.00  229.00  176.00    0.80     0.67    1.00      918.00
+
+----------------------------------------------------------------------
+Numeric distributions: contracts
+----------------------------------------------------------------------
+
+            salary    guaranteed
+count       487.00  4.680000e+02
+mean   11493256.69  3.289581e+07
+std    13425569.97  5.321994e+07
+min       70732.00  7.073200e+04
+25%     2296274.00  3.000000e+06
+50%     5685000.00  9.900370e+06
+75%    14263587.00  3.260422e+07
+max    59606817.00  2.767954e+08
+
+----------------------------------------------------------------------
+Suspicious values: stats
+----------------------------------------------------------------------
+
+  (no suspicious values detected)
+
+----------------------------------------------------------------------
+Suspicious values: contracts
+----------------------------------------------------------------------
+
+  (no suspicious values detected)
+
+----------------------------------------------------------------------
+Suspicious values: merged
+----------------------------------------------------------------------
+
+  (no suspicious values detected)
+
+======================================================================
+Integration coverage
+======================================================================
+
+Stats players (after filtering):     520
+Contracts players (after dedup):     487
+Successfully merged:                 411
+Match rate (vs. stats):              79.0%
+
+Stats players unmatched:             109
+Contracts players unmatched:         76
+
+Unmatched players were investigated manually and identified as
+predominantly free agents, two-way contract players, and mid-season
+waivers/buyouts whose contracts are not listed on Basketball Reference.
+
+----------------------------------------------------------------------
+EtD ratio sanity check
+----------------------------------------------------------------------
+
+Top 10 by EtD (best value):
+           player_name    salary  production_score  etd_ratio
+Jeremiah Robinson-Earl  131970.0            1020.0    7729.03
+         Dalano Banton  263940.0            1115.0    4224.44
+        Jaden Springer   70732.0             284.1    4016.57
+        Charles Bassey  263940.0             452.9    1715.92
+      Garrison Mathews  429325.0             629.4    1466.02
+          Monte Morris  321184.0             468.9    1459.91
+         Cameron Payne  712637.0            1039.3    1458.39
+     Russell Westbrook 2296274.0            2409.5    1049.31
+      Christian Koloko  263940.0             272.4    1032.05
+            Chris Paul 2296274.0            2235.7     973.62
+
+Bottom 10 by EtD (worst value):
+      player_name     salary  production_score  etd_ratio
+      Joel Embiid 55224526.0             829.5      15.02
+   Leonard Miller  2221677.0              39.2      17.64
+   Brandon Ingram 38095238.0             713.5      18.73
+    Bobi Klintman  1955377.0              39.9      20.41
+      Kobe Bufkin  5480297.0             113.7      20.75
+Mitchell Robinson 12954546.0             295.7      22.83
+    Pacôme Dadiet  2847600.0              69.1      24.27
+ Matisse Thybulle 11550000.0             300.4      26.01
+      Paul George 51666090.0            1384.8      26.80
+     Cam Christie  1955377.0              53.4      27.31

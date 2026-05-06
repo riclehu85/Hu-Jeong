@@ -186,3 +186,35 @@ unmatched.to_csv(UNMATCHED_OUT, index=False)
 print(f"Saved unmatched rows -> {UNMATCHED_OUT}")
 
 print("\nDone.")
+
+'''
+OUTPUT:
+NBA Player Stats <-> Contracts Integration Summary
+Season: 2025-26
+Generated: <date>
+
+Source counts (after cleaning):
+  Stats:     520 players
+  Contracts: 487 players
+
+Integration results:
+  Matched (exact name):  411
+  Matched (fuzzy):         0
+  Total integrated:      411  (79% of stats roster)
+
+Unmatched:
+  Stats players without contract:    109
+  Contract players without stats:     76
+
+Reasons for unmatched stats players (manual inspection):
+  - Free agents waived mid-season (e.g., Ben Simmons)
+  - Two-way and 10-day contract players (e.g., Cam Reddish)
+  - Buyout players
+  - Late signings not yet in Basketball Reference snapshot
+  These players are excluded from ROI analysis as no contract value
+  is publicly listed.
+
+Reasons for unmatched contract players:
+  - Players signed but not yet meeting our 8-game minimum
+  - Players whose stats appear under spelling variants we couldn't catch
+  '''

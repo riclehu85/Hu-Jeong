@@ -2,21 +2,25 @@
 data_cleaning.py
 
 Cleans the raw NBA player stats and contracts datasets and saves processed
-versions ready for integration.
+versions ready for integration. Now includes advanced stats merged into the
+player stats output.
 
 Operations:
-    - Selects useful columns
+    - Loads base stats and advanced stats from the API
+    - Merges them on PLAYER_ID into a single stats dataframe
+    - Selects useful columns from both
     - Standardizes column names (snake_case)
+    - Computes per-game versions of counting stats
     - Strips whitespace from player names
     - Converts salary strings ('$1,234,567') to numeric values
-    - Drops rows missing critical fields (player_name, salary, gp)
-    - Filters out players with fewer than 8 games (low-sample noise)
+    - Drops rows missing critical fields
+    - Filters out players with fewer than MIN_GAMES_PLAYED games
     - Deduplicates contracts (Basketball Reference lists one row per future
-      contract year per player; we collapse to one row per player)
-    - Adds a season column for downstream joins
+      contract year per player)
 
 Inputs:
     data/raw/nba_player_stats.csv
+    data/raw/nba_player_advanced.csv
     data/raw/nba_contracts_raw.csv
 
 Outputs:
@@ -29,68 +33,84 @@ from pathlib import Path
 
 import pandas as pd
 
-# ---------------------------------------------------------------------------
-# Resolve paths relative to project root, regardless of where script is run
-# ---------------------------------------------------------------------------
+# Resolve paths relative to project root
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 os.chdir(PROJECT_ROOT)
 
-# ---------------------------------------------------------------------------
 # Config
-# ---------------------------------------------------------------------------
 STATS_RAW = Path("data/raw/nba_player_stats.csv")
+ADVANCED_RAW = Path("data/raw/nba_player_advanced.csv")
 CONTRACTS_RAW = Path("data/raw/nba_contracts_raw.csv")
 STATS_OUT = Path("data/processed/nba_player_stats_cleaned.csv")
 CONTRACTS_OUT = Path("data/processed/nba_contracts_cleaned.csv")
 
-MIN_GAMES_PLAYED = 8  # filter out small-sample players
+MIN_GAMES_PLAYED = 8
 SEASON_LABEL = "2025-26"
 
-# Ensure output directory exists
 Path("data/processed").mkdir(parents=True, exist_ok=True)
 
 
-# ---------------------------------------------------------------------------
 # Load
-# ---------------------------------------------------------------------------
 print("Loading raw datasets...")
 stats = pd.read_csv(STATS_RAW)
+advanced = pd.read_csv(ADVANCED_RAW)
 contracts = pd.read_csv(CONTRACTS_RAW)
-print(f"  stats:     {len(stats)} rows")
-print(f"  contracts: {len(contracts)} rows")
+print(f"  base stats:     {len(stats)} rows")
+print(f"  advanced stats: {len(advanced)} rows")
+print(f"  contracts:      {len(contracts)} rows")
 
 
-# ---------------------------------------------------------------------------
+# Merge base and advanced stats on PLAYER_ID
+# Keep only the advanced columns we want, to avoid duplicating cols from base.
+# PLAYER_ID is the merge key.
+adv_cols_keep = [
+    "PLAYER_ID",
+    "OFF_RATING",
+    "DEF_RATING",
+    "NET_RATING",
+    "USG_PCT",
+    "TS_PCT",
+    "PIE",  # Player Impact Estimate (NBA's all-in-one production metric)
+    "AST_PCT",
+    "REB_PCT",
+]
+# Defensive: only keep columns that actually exist in the API
+adv_cols_keep = [c for c in adv_cols_keep if c in advanced.columns]
+advanced = advanced[adv_cols_keep]
+
+stats = stats.merge(advanced, on="PLAYER_ID", how="left")
+print(f"\nAfter merging advanced stats: {len(stats)} rows")
+
+
 # Inspect missing values (for the data quality writeup)
-# ---------------------------------------------------------------------------
-print("\nMissing values in stats:")
+print("\nMissing values in stats (post-merge):")
 print(stats.isnull().sum())
 print("\nMissing values in contracts:")
 print(contracts.isnull().sum())
 
 
-# ---------------------------------------------------------------------------
 # Select useful columns
-# ---------------------------------------------------------------------------
-stats = stats[
-    [
-        "PLAYER_ID",
-        "PLAYER_NAME",
-        "TEAM_ABBREVIATION",
-        "AGE",
-        "GP",
-        "MIN",
-        "PTS",
-        "REB",
-        "AST",
-        "STL",
-        "BLK",
-        "FG_PCT",
-        "FG3_PCT",
-        "FT_PCT",
-        "PLUS_MINUS",
-    ]
+base_cols = [
+    "PLAYER_ID",
+    "PLAYER_NAME",
+    "TEAM_ABBREVIATION",
+    "AGE",
+    "GP",
+    "MIN",
+    "PTS",
+    "REB",
+    "AST",
+    "STL",
+    "BLK",
+    "FG_PCT",
+    "FG3_PCT",
+    "FG3A",   # 3-point attempts (used to identify 3-and-D archetype)
+    "FT_PCT",
+    "PLUS_MINUS",
 ]
+keep_cols = base_cols + adv_cols_keep[1:]  # skip PLAYER_ID dup
+keep_cols = [c for c in keep_cols if c in stats.columns]
+stats = stats[keep_cols]
 
 contracts = contracts[
     [
@@ -102,9 +122,7 @@ contracts = contracts[
 ]
 
 
-# ---------------------------------------------------------------------------
-# Rename columns to snake_case for consistency
-# ---------------------------------------------------------------------------
+# Rename columns to snake_case
 stats = stats.rename(
     columns={
         "PLAYER_ID": "player_id",
@@ -120,8 +138,17 @@ stats = stats.rename(
         "BLK": "blocks",
         "FG_PCT": "fg_pct",
         "FG3_PCT": "fg3_pct",
+        "FG3A": "fg3a",
         "FT_PCT": "ft_pct",
         "PLUS_MINUS": "plus_minus",
+        "OFF_RATING": "off_rating",
+        "DEF_RATING": "def_rating",
+        "NET_RATING": "net_rating",
+        "USG_PCT": "usage_pct",
+        "TS_PCT": "true_shooting_pct",
+        "PIE": "pie",
+        "AST_PCT": "ast_pct",
+        "REB_PCT": "reb_pct",
     }
 )
 
@@ -135,17 +162,22 @@ contracts = contracts.rename(
 )
 
 
-# ---------------------------------------------------------------------------
-# Clean player names (strip whitespace; keeps original casing/punctuation
-# since name normalization for matching happens in data_integration.py)
-# ---------------------------------------------------------------------------
+# Per-game versions of counting stats
+# (Per-game lets us compare players who missed games fairly. The NBA API
+# returns season totals, so we divide by GP.)
+per_game_cols = ["points", "rebounds", "assists", "steals", "blocks", "fg3a", "minutes"]
+for col in per_game_cols:
+    if col in stats.columns:
+        stats[f"{col}_pg"] = (stats[col] / stats["gp"]).round(2)
+
+
+# Clean player names (strip whitespace; full normalization happens in
+# data_integration.py)
 stats["player_name"] = stats["player_name"].astype(str).str.strip()
 contracts["player_name"] = contracts["player_name"].astype(str).str.strip()
 
 
-# ---------------------------------------------------------------------------
-# Clean salary columns: strip '$' and ',' then convert to numeric
-# ---------------------------------------------------------------------------
+# Clean salary columns
 for col in ["salary", "guaranteed"]:
     contracts[col] = (
         contracts[col]
@@ -157,9 +189,7 @@ for col in ["salary", "guaranteed"]:
     contracts[col] = pd.to_numeric(contracts[col], errors="coerce")
 
 
-# ---------------------------------------------------------------------------
 # Drop rows with missing critical fields
-# ---------------------------------------------------------------------------
 before_stats = len(stats)
 stats = stats.dropna(subset=["player_name", "gp"])
 print(f"\nDropped {before_stats - len(stats)} stats rows with missing player_name/gp")
@@ -169,27 +199,24 @@ contracts = contracts.dropna(subset=["player_name", "salary"])
 print(f"Dropped {before_contracts - len(contracts)} contracts rows with missing player_name/salary")
 
 
-# ---------------------------------------------------------------------------
-# Filter out players with fewer than MIN_GAMES_PLAYED games (low-sample noise)
-# ---------------------------------------------------------------------------
+# Filter out players with fewer than MIN_GAMES_PLAYED games
 before = len(stats)
 stats = stats[stats["gp"] >= MIN_GAMES_PLAYED]
 print(f"Filtered out {before - len(stats)} stats rows with fewer than {MIN_GAMES_PLAYED} games played")
 
+# Minimum minutes filter: catches small-sample players whose rate stats can
+# produce extreme advanced metric values (e.g., PIE > 0.20) that don't
+# represent sustainable production. 250 total minutes ≈ 10 minutes per game
+# across 25 games, a reasonable rotation-player threshold.
+MIN_TOTAL_MINUTES = 250
 
-# ---------------------------------------------------------------------------
-# Deduplicate contracts
-#
-# Basketball Reference's contracts table includes one row per future contract
-# year per player. The annual salary is the same across these rows, but the
-# "Guaranteed" amount varies year-to-year (early years are typically fully
-# guaranteed; later years often have team options or partial guarantees).
-#
-# Because our research question concerns ROI for the 2025-26 season
-# specifically, we collapse to a single row per player and keep the row with
-# the highest guaranteed amount, which represents the most committed year of
-# the contract.
-# ---------------------------------------------------------------------------
+before = len(stats)
+stats = stats[stats["minutes"] >= MIN_TOTAL_MINUTES]
+print(f"Filtered out {before - len(stats)} stats rows with fewer than {MIN_TOTAL_MINUTES} minutes played")
+
+# (Basketball Reference's contracts table includes one row per future contract
+# year per player. We collapse to one row per player, keeping the row with
+# the highest guaranteed amount, which represents the most-committed year.)
 before = len(contracts)
 contracts = (
     contracts.sort_values("guaranteed", ascending=False, na_position="last")
@@ -198,8 +225,7 @@ contracts = (
 )
 print(f"Deduplicated contracts: {before} -> {len(contracts)} rows ({before - len(contracts)} duplicates removed)")
 
-# Defensive dedup of stats too (the NBA API shouldn't return duplicates, but
-# this catches any unexpected issues and keeps the pipeline robust).
+# Defensive dedup of stats
 before = len(stats)
 stats = (
     stats.sort_values("gp", ascending=False)
@@ -209,20 +235,16 @@ stats = (
 print(f"Deduplicated stats: {before} -> {len(stats)} rows ({before - len(stats)} duplicates removed)")
 
 
-# ---------------------------------------------------------------------------
-# Add season column for downstream joins / multi-season analyses
-# ---------------------------------------------------------------------------
+# Add season column
 stats["season"] = SEASON_LABEL
 contracts["season"] = SEASON_LABEL
 
 
-# ---------------------------------------------------------------------------
-# Save cleaned files
-# ---------------------------------------------------------------------------
+# Save
 stats.to_csv(STATS_OUT, index=False)
 contracts.to_csv(CONTRACTS_OUT, index=False)
 
 print("\nSaved:")
-print(f"  {STATS_OUT}  ({len(stats)} rows)")
+print(f"  {STATS_OUT}  ({len(stats)} rows, {len(stats.columns)} cols)")
 print(f"  {CONTRACTS_OUT}  ({len(contracts)} rows)")
 print("\nDone.")
