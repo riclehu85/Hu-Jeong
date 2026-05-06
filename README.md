@@ -180,7 +180,7 @@ The top 20 players by EtD-PIE are dominated by Role Players and Rookie Contribut
 **Step 1. Clone the repository**
 
 ```bash
-   git clone https://github.com/<your-username>/Hu-Jeong.git
+   git clone https://github.com/riclehu85/Hu-Jeong.git
    cd Hu-Jeong
 ```
 
